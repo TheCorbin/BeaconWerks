@@ -1,14 +1,41 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Eddystone Estimote Beacons
     </ion-title>
+    <ion-buttons start>
+        <button ion-button (click)="startScanningForBeacons()">Scan</button>
+    </ion-buttons>
+    <ion-buttons end>
+        <button ion-button (click)="stopScanningForBeacons()">Stop Scan</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div *ngIf="beaconData != []; else beaconFound">
+   <ion-card>
+     <ion-card-header>
+     </ion-card-header>
+     <ion-card-content>
+       <p>Click the start scan button to scan for beacons!</p>
+     </ion-card-content>
+  </ion-card>   
+ </div>
+
+   <ion-list *ngIf="beaconData">
+    <ion-card *ngFor="let bec of beaconData">
+      <ion-card-header>
+        Beacon Found
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>Address: {{bec.address}}</ion-item>
+          <ion-item>Temperature: {{bec.temperature}}</ion-item>
+          <ion-item>RSSI: {{bec.rssi}}</ion-item>  
+        </ion-list>
+        <a [href]="bec.url">URL</a>
+      </ion-card-content>
+    </ion-card>
+   </ion-list>
 </ion-content>
